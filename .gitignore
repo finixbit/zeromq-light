@@ -27,3 +27,8 @@
 *.exe
 *.out
 *.app
+
+example/zmq_pub
+example/zmq_sub
+example/zmq_req
+example/zmq_rep
