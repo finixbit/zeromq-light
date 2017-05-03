@@ -45,9 +45,7 @@ int main(int argc, char* argv[]) {
 }
 
 bool processData(char* data, uint32_t data_len) {
-  /*
-  * Convert data to cpp string
-  */
+  /* Convert data to cpp string */
   std::string dataString;
   dataString.append(data, data_len);
 
