@@ -143,13 +143,11 @@ void ZeromqLight::zmqRecieveMessage(getDataFuncptr getDataFun) {
     zmq_msg_t reply;
     zmq_msg_init(&reply);
     zmq_msg_recv(&reply, zmqSocket, 0);
-
     size_t length = zmq_msg_size(&reply);
-    char* msg   = (char*)malloc(sizeof(char) * length);
-
+    
+    char* msg = (char*)malloc(sizeof(char) * length);
     memcpy(msg, zmq_msg_data(&reply), length);
     getDataFun(msg, length);
-
     zmq_msg_close(&reply);
     free(msg);
   }
@@ -159,9 +157,7 @@ bool ZeromqLight::zmqSendMessage(std::string &data) {
   try {
     zmq_msg_t message;
     zmq_msg_init_size(&message, data.length());
-
     memcpy(zmq_msg_data(&message), data.c_str(), data.length());
-
     zmq_msg_send(&message, zmqSocket, 0);
     zmq_msg_close(&message);
   } catch (...) {
