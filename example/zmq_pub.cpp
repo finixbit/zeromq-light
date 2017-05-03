@@ -41,8 +41,11 @@ int main(int argc, char* argv[]) {
   if(zmqApp.zmqConnIsInvalid())
     return EXIT_FAILURE;
 
-  if(!zmqApp.zmqSendMessage(testData))
-    std::cout << "Zeromq Publish error ..." << std::endl;
-  else
-    std::cout << "Zeromq Publish successful ..." << std::endl;
+  while(true) {
+    if(!zmqApp.zmqSendMessage(testData))
+      std::cout << "Zeromq Publish error ..." << std::endl;
+    else
+      std::cout << "Zeromq Publish successful ..." << std::endl;
+  }
+  
 }

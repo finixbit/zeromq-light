@@ -29,20 +29,28 @@
 #include <iostream>
 #include "../zeromq_light.h"
 
+bool processData(char* data, uint32_t data_len);
 
 int main(int argc, char* argv[]) {
   ZeromqLight zmqApp;
-  std::string conString = "tcp://*:5559";
-  std::string testData = "hello world";
+  std::string conString = "tcp://localhost:5559";
 
-  zmqApp.init(conString, ZMQ_PUB);
+  zmqApp.init(conString, ZMQ_SUB);
 
-  zmqApp.zmqBind();
+  zmqApp.zmqConnect();
   if(zmqApp.zmqConnIsInvalid())
     return EXIT_FAILURE;
 
-  if(!zmqApp.zmqSendMessage(testData))
-    std::cout << "Zeromq Publish error ..." << std::endl;
-  else
-    std::cout << "Zeromq Publish successful ..." << std::endl;
+  zmqApp.zmqRecieveMessage(processData);
+}
+
+bool processData(char* data, uint32_t data_len) {
+  /*
+  * Convert data to cpp string
+  */
+  std::string dataString;
+  dataString.append(data, data_len);
+
+  std::cout << dataString << std::endl;
+  return true;
 }
